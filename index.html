@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Impostor Word Game — Chaotic</title>
+
+  <!-- Firebase (compat build for simple code) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Impostor Word Game (Chaotic)</h1>
+      <p class="muted">One word each → vote → find the impostor</p>
+    </header>
+
+    <main id="main">
+      <!-- Lobby / Create / Join -->
+      <section id="lobbySection" class="card">
+        <h2>Lobby</h2>
+
+        <div class="row">
+          <div class="col">
+            <h3>Create Room</h3>
+            <input id="createRoomId" placeholder="Room ID (e.g., friends123)" />
+            <input id="createPassword" placeholder="Password (optional)" />
+            <input id="displayNameCreate" placeholder="Your name" />
+            <button id="createRoomBtn">Create & Host</button>
+          </div>
+
+          <div class="col">
+            <h3>Join Room</h3>
+            <input id="joinRoomId" placeholder="Room ID" />
+            <input id="joinPassword" placeholder="Password" />
+            <input id="displayNameJoin" placeholder="Your name" />
+            <button id="joinRoomBtn">Join Room</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Room UI -->
+      <section id="roomSection" class="card" style="display:none;">
+        <div class="room-top">
+          <div>
+            <strong>Room:</strong> <span id="roomIdLabel"></span>
+            <span id="roomStatusLabel" class="muted"></span>
+          </div>
+          <div>
+            <button id="leaveRoomBtn" class="danger">Leave</button>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="sidebar">
+            <h4>Players</h4>
+            <ul id="playersList"></ul>
+            <div id="hostControls" style="display:none;">
+              <h4>Host Controls</h4>
+              <label>Categories</label>
+              <select id="categorySelect"></select>
+              <div class="row">
+                <button id="randomCategoryBtn">Random</button>
+                <input id="hintInput" placeholder="Hint for impostor (optional)" />
+              </div>
+
+              <div class="row">
+                <button id="startRoundBtn">Start Round</button>
+                <button id="endVoteBtn" style="display:none;">End Vote / Tally</button>
+                <button id="rematchBtn" style="display:none;">Rematch</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-area">
+            <div id="gameInfo">
+              <div><strong>Role:</strong> <span id="roleLabel">—</span></div>
+              <div><strong>Category:</strong> <span id="categoryLabel">—</span></div>
+              <div id="hintBox" style="display:none;"><strong>Impostor hint:</strong> <span id="hintLabel"></span></div>
+            </div>
+
+            <div id="submitArea" class="card" style="display:none;">
+              <h4>Submit your one word</h4>
+              <input id="wordInput" placeholder="Your word (single word)" />
+              <button id="submitWordBtn">Submit Word</button>
+              <div id="submittedMsg" class="muted" style="display:none;">Word submitted.</div>
+            </div>
+
+            <div id="votingArea" class="card" style="display:none;">
+              <h4>Voting</h4>
+              <p>Pick a player to vote out:</p>
+              <ul id="votingList"></ul>
+              <div id="voteStatus" class="muted"></div>
+            </div>
+
+            <div id="resultsArea" class="card" style="display:none;">
+              <h4>Results</h4>
+              <p id="resultsText"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="muted small">Built for classroom play. Don't use to bypass network rules.</footer>
+    </main>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
